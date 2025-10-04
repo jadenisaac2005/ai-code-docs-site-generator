@@ -1,0 +1,11 @@
+site_name: AI Code Documentation Generator
+site_author: Hackathon Team
+
+nav:
+    - Home: index.md
+    - Code Documentation:
+        - Main Functions: main.md
+        - Utility Functions: utils.md
+
+theme:
+    name: material
