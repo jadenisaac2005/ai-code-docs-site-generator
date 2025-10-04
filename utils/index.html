@@ -347,214 +347,29 @@
 
 
 <h1 id="utilspy">utils.py</h1>
-<h1 id="python-utility-module-documentation">📚 Python Utility Module Documentation</h1>
-<p>This module provides two small, well‑typed helper functions:</p>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>add</code></td>
-<td>Computes the arithmetic sum of two integers.</td>
-</tr>
-<tr>
-<td><code>get_user_greeting</code></td>
-<td>Generates a friendly, personalised greeting string.</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="table-of-contents">Table of Contents</h2>
-<ol>
-<li><a href="#installation--import">Installation &amp; Import</a>  </li>
-<li><a href="#function-reference">Function Reference</a>  </li>
-<li><a href="#add">add</a>  </li>
-<li><a href="#get_user_greeting">get_user_greeting</a>  </li>
-<li><a href="#examples">Examples</a>  </li>
-<li><a href="#testing-tips">Testing Tips</a>  </li>
-<li><a href="#changelog">Changelog</a>  </li>
-</ol>
-<hr />
-<h2 id="installation-import">Installation &amp; Import</h2>
-<p>The code lives in a regular Python file (e.g., <code>utils.py</code>).<br />
-You can import the functions directly:</p>
-<pre><code class="language-python">from utils import add, get_user_greeting
-</code></pre>
-<p>No external dependencies are required—both functions rely solely on the Python standard library.</p>
-<hr />
-<h2 id="function-reference">Function Reference</h2>
-<h3 id="add"><code>add</code></h3>
 <pre><code class="language-python">def add(a: int, b: int) -&gt; int:
-    &quot;&quot;&quot;
-    Calculates the sum of two integer values.
+    &quot;&quot;&quot;Calculate the sum of two integers.
 
-    :param a: The first integer.
-    :param b: The second integer.
-    :return: The sum of a and b.
+    Args:
+        a (int): The first integer.
+        b (int): The second integer.
+
+    Returns:
+        int: The sum of *a* and *b*.
     &quot;&quot;&quot;
     return a + b
-</code></pre>
-<h4 id="description">Description</h4>
-<p>Returns the arithmetic sum of <code>a</code> and <code>b</code>. Both arguments must be integers; a <code>TypeError</code> will be raised automatically by Python if non‑integers are supplied.</p>
-<h4 id="parameters">Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>a</code></td>
-<td><code>int</code></td>
-<td>First addend.</td>
-</tr>
-<tr>
-<td><code>b</code></td>
-<td><code>int</code></td>
-<td>Second addend.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="returns">Returns</h4>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>int</code></td>
-<td>The result of <code>a + b</code>.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="example">Example</h4>
-<pre><code class="language-python">&gt;&gt;&gt; add(3, 7)
-10
-&gt;&gt;&gt; add(-5, 12)
-7
-</code></pre>
-<hr />
-<h3 id="get_user_greeting"><code>get_user_greeting</code></h3>
-<pre><code class="language-python">def get_user_greeting(username: str) -&gt; str:
-    &quot;&quot;&quot;
-    Generates a personalized greeting message for a user.
 
-    :param username: The name of the user.
-    :return: A greeting string, e.g., &quot;Hello, [username]!&quot;.
+def get_user_greeting(username: str) -&gt; str:
+    &quot;&quot;&quot;Generate a personalized greeting message.
+
+    Args:
+        username (str): The name of the user.
+
+    Returns:
+        str: A greeting string, e.g., &quot;Hello, &lt;username&gt;!&quot;.
     &quot;&quot;&quot;
     return f&quot;Hello, {username}!&quot;
 </code></pre>
-<h4 id="description_1">Description</h4>
-<p>Builds a simple, human‑readable greeting that incorporates the supplied <code>username</code>. The function expects a string and returns a string formatted as <code>"Hello, &lt;username&gt;!"</code>.</p>
-<h4 id="parameters_1">Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>username</code></td>
-<td><code>str</code></td>
-<td>The user’s name (any non‑empty string).</td>
-</tr>
-</tbody>
-</table>
-<h4 id="returns_1">Returns</h4>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>str</code></td>
-<td>A greeting such as <code>"Hello, Alice!"</code>.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="example_1">Example</h4>
-<pre><code class="language-python">&gt;&gt;&gt; get_user_greeting(&quot;Alice&quot;)
-'Hello, Alice!'
-&gt;&gt;&gt; get_user_greeting(&quot;Bob&quot;)
-'Hello, Bob!'
-</code></pre>
-<hr />
-<h2 id="examples">Examples</h2>
-<p>Below is a short script that demonstrates both utilities together:</p>
-<pre><code class="language-python">from utils import add, get_user_greeting
-
-def main():
-    # Example 1: Simple addition
-    x, y = 15, 27
-    total = add(x, y)
-    print(f&quot;{x} + {y} = {total}&quot;)
-
-    # Example 2: Greeting a user
-    name = &quot;Charlie&quot;
-    greeting = get_user_greeting(name)
-    print(greeting)
-
-if __name__ == &quot;__main__&quot;:
-    main()
-</code></pre>
-<p><strong>Expected output</strong></p>
-<pre><code>15 + 27 = 42
-Hello, Charlie!
-</code></pre>
-<hr />
-<h2 id="testing-tips">Testing Tips</h2>
-<p>A minimal test suite can be written with <code>pytest</code>:</p>
-<pre><code class="language-python">import pytest
-from utils import add, get_user_greeting
-
-def test_add():
-    assert add(1, 2) == 3
-    assert add(-5, 5) == 0
-    assert add(0, 0) == 0
-
-def test_get_user_greeting():
-    assert get_user_greeting(&quot;Ada&quot;) == &quot;Hello, Ada!&quot;
-    assert get_user_greeting(&quot;&quot;) == &quot;Hello, !&quot;
-</code></pre>
-<p>Run the tests:</p>
-<pre><code class="language-bash">pytest test_utils.py
-</code></pre>
-<hr />
-<h2 id="changelog">Changelog</h2>
-<table>
-<thead>
-<tr>
-<th>Version</th>
-<th>Date</th>
-<th>Changes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1.0.0</td>
-<td>2025‑10‑04</td>
-<td>Initial release with <code>add</code> and <code>get_user_greeting</code>.</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<p><em>Prepared by the documentation generator – concise, type‑safe, and ready for integration.</em></p>
 
 
 

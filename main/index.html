@@ -349,192 +349,32 @@
 
 
 <h1 id="mainpy">main.py</h1>
-<h1 id="documentation-mainpy">📄 Documentation – <code>main.py</code></h1>
-<h2 id="overview">Overview</h2>
-<p><code>main.py</code> provides two small, self‑contained utility functions that are useful in many introductory programming, data‑analysis, or hackathon projects:</p>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong><code>calculate_area</code></strong></td>
-<td>Computes the area of a rectangle given its <code>length</code> and <code>width</code>.</td>
-</tr>
-<tr>
-<td><strong><code>is_positive</code></strong></td>
-<td>Determines whether an integer is strictly greater than zero.</td>
-</tr>
-</tbody>
-</table>
-<p>Both functions are type‑annotated and include comprehensive docstrings, making them ready for static analysis tools (e.g., <code>mypy</code>, <code>pylint</code>) and IDE autocompletion.</p>
-<hr />
-<h2 id="table-of-contents">Table of Contents</h2>
-<ol>
-<li><a href="#installation--usage">Installation &amp; Usage</a>  </li>
-<li><a href="#function-reference">Function Reference</a>  </li>
-<li><a href="#calculate_area"><code>calculate_area</code></a>  </li>
-<li><a href="#is_positive"><code>is_positive</code></a>  </li>
-<li><a href="#examples">Examples</a>  </li>
-<li><a href="#testing">Testing</a>  </li>
-<li><a href="#contributing">Contributing</a>  </li>
-<li><a href="#license">License</a>  </li>
-</ol>
-<hr />
-<h2 id="installation-usage">Installation &amp; Usage</h2>
-<p>The module does not have external dependencies, so you can simply copy <code>main.py</code> into your project or install it as part of a package.</p>
-<pre><code class="language-bash"># Option 1 – copy the file
-cp path/to/main.py your_project/
-
-# Option 2 – import from a package (if you structure it as a package)
-pip install -e .
-</code></pre>
-<p>Then import the functions in your Python code:</p>
-<pre><code class="language-python">from main import calculate_area, is_positive
-</code></pre>
-<blockquote>
-<p><strong>Note:</strong> The file assumes a normal Python package layout. If you are running a generator script from a different working directory, ensure the import path is adjusted accordingly (e.g., using relative imports or modifying <code>sys.path</code>).</p>
-</blockquote>
-<hr />
-<h2 id="function-reference">Function Reference</h2>
-<h3 id="calculate_area"><code>calculate_area</code></h3>
 <pre><code class="language-python">def calculate_area(length: float, width: float) -&gt; float:
     &quot;&quot;&quot;
-    Computes the area of a rectangle.
+    Compute the area of a rectangle.
 
-    :param length: The length of the rectangle.
-    :param width: The width of the rectangle.
-    :return: The calculated area.
+    Args:
+        length (float): Length of the rectangle.
+        width (float): Width of the rectangle.
+
+    Returns:
+        float: The calculated area.
     &quot;&quot;&quot;
-</code></pre>
-<p><strong>Description</strong><br />
-Returns the product of <code>length</code> and <code>width</code>, which is the geometric area of a rectangle.</p>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>length</code></td>
-<td><code>float</code></td>
-<td>Length of the rectangle (must be non‑negative for a valid shape).</td>
-</tr>
-<tr>
-<td><code>width</code></td>
-<td><code>float</code></td>
-<td>Width of the rectangle (must be non‑negative for a valid shape).</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Return value</strong><br />
-<code>float</code> – the computed area (<code>length * width</code>).</p>
-<p><strong>Raises</strong><br />
-No explicit exceptions are raised; however, passing non‑numeric types will result in a <code>TypeError</code> from Python’s arithmetic operator.</p>
-<hr />
-<h3 id="is_positive"><code>is_positive</code></h3>
-<pre><code class="language-python">def is_positive(number: int) -&gt; bool:
+    return length * width
+
+
+def is_positive(number: int) -&gt; bool:
     &quot;&quot;&quot;
-    Checks if a given number is strictly positive.
+    Determine whether an integer is strictly positive.
 
-    :param number: The integer to check.
-    :return: True if the number is greater than 0, False otherwise.
+    Args:
+        number (int): The integer to evaluate.
+
+    Returns:
+        bool: ``True`` if ``number`` is greater than 0; otherwise ``False``.
     &quot;&quot;&quot;
+    return number &gt; 0
 </code></pre>
-<p><strong>Description</strong><br />
-Evaluates whether <code>number</code> is greater than zero.</p>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>number</code></td>
-<td><code>int</code></td>
-<td>Integer to test.</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Return value</strong><br />
-<code>bool</code> – <code>True</code> if <code>number &gt; 0</code>, otherwise <code>False</code>.</p>
-<p><strong>Raises</strong><br />
-No explicit exceptions are raised; passing a non‑integer triggers a <code>TypeError</code> at runtime when the comparison is performed.</p>
-<hr />
-<h2 id="examples">Examples</h2>
-<h3 id="basic-usage">Basic usage</h3>
-<pre><code class="language-python">from main import calculate_area, is_positive
-
-# 1️⃣ Compute a rectangle area
-area = calculate_area(5.0, 3.2)   # → 16.0
-print(f&quot;The rectangle's area is {area}&quot;)
-
-# 2️⃣ Check positivity
-print(is_positive(10))   # → True
-print(is_positive(-4))   # → False
-</code></pre>
-<h3 id="edge-cases">Edge cases</h3>
-<pre><code class="language-python"># Zero dimensions are mathematically valid (area = 0)
-assert calculate_area(0, 10) == 0
-
-# Negative width/length still returns a numeric result,
-# but you may want to guard against it in production code.
-assert calculate_area(-2, 5) == -10
-</code></pre>
-<h3 id="integration-in-a-larger-script">Integration in a larger script</h3>
-<pre><code class="language-python">def process_rectangle(dimensions: tuple[float, float]) -&gt; str:
-    length, width = dimensions
-    if length &lt; 0 or width &lt; 0:
-        return &quot;Invalid dimensions: lengths must be non‑negative.&quot;
-    area = calculate_area(length, width)
-    return f&quot;The area of the {length}×{width} rectangle is {area}.&quot;
-</code></pre>
-<hr />
-<h2 id="testing">Testing</h2>
-<p>Simple unit tests can be written with <code>unittest</code> or <code>pytest</code>. Below is a minimal example using <code>pytest</code>:</p>
-<pre><code class="language-python"># test_main.py
-import pytest
-from main import calculate_area, is_positive
-
-def test_calculate_area():
-    assert calculate_area(2.0, 3.0) == 6.0
-    assert calculate_area(0, 5) == 0
-    assert calculate_area(-1, 4) == -4   # demonstrates no validation inside the function
-
-def test_is_positive():
-    assert is_positive(5) is True
-    assert is_positive(0) is False
-    assert is_positive(-3) is False
-</code></pre>
-<p>Run the tests:</p>
-<pre><code class="language-bash">pytest -q
-</code></pre>
-<p>All tests should pass, confirming the expected behaviour.</p>
-<hr />
-<h2 id="contributing">Contributing</h2>
-<p>Contributions are welcome! Follow these steps:</p>
-<ol>
-<li><strong>Fork</strong> the repository.</li>
-<li><strong>Create</strong> a feature branch (<code>git checkout -b feature/your-feature</code>).</li>
-<li><strong>Write</strong> clean, type‑annotated code and update documentation accordingly.</li>
-<li><strong>Add</strong> tests for new functionality.</li>
-<li><strong>Submit</strong> a pull request with a concise description of the changes.</li>
-</ol>
-<p>Please adhere to the existing docstring style and keep the module free of external dependencies unless absolutely necessary.</p>
-<hr />
-<h2 id="license">License</h2>
-<p>This module is released under the <strong>MIT License</strong> – a permissive, open‑source license. See the <code>LICENSE</code> file for full terms.</p>
-<hr />
-<p><em>Generated by an automated documentation assistant. For any questions or suggestions, feel free to open an issue or contact the maintainer.</em></p>
 
 
 
