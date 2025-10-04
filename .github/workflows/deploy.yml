@@ -1,7 +1,6 @@
 name: Deploy Documentation to GitHub Pages
 
 on:
-  # Runs on pushes to the main branch
   push:
     branches:
       - main
@@ -29,6 +28,7 @@ jobs:
           GRADIENT_ENDPOINT_URL: ${{ secrets.GRADIENT_ENDPOINT_URL }}
           GRADIENT_API_KEY: ${{ secrets.GRADIENT_API_KEY }}
 
+      # --- FIX #1: ADDED THIS BUILD STEP ---
       - name: Build the MkDocs site
         run: mkdocs build
 
@@ -36,4 +36,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # --- FIX #2: CORRECTED THE DIRECTORY TO 'site' ---
           publish_dir: ./site
