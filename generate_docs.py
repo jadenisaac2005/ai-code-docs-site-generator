@@ -13,26 +13,30 @@ SOURCE_DIR = "./sample-project"
 DOCS_DIR = "./docs"
 
 def get_ai_documentation(code_content: str) -> str:
-    """Calls the Gradient AI to generate documentation using a GET request."""
+    """Calls the Gradient AI and safely handles JSON or plain text responses."""
     headers = {"Authorization": f"Bearer {GRADIENT_API_KEY}"}
-
-    # For a GET request, data is sent as URL parameters, not a JSON body.
     params = {
         "inputs": f"Generate technical markdown documentation for this Python code:\n\n{code_content}"
     }
 
-    # --- THIS IS THE FIX: Changed requests.post to requests.get ---
-    response = requests.get(GRADIENT_ENDPOINT_URL, headers=headers, params=params)
+    try:
+        response = requests.get(GRADIENT_ENDPOINT_URL, headers=headers, params=params)
+        response.raise_for_status() # Raise an exception for bad status codes (4xx or 5xx)
 
-    if response.status_code == 200:
-        # The response from a GET request might have a slightly different structure.
-        # This assumes it's a list containing a dictionary.
+        # --- THIS IS THE FIX ---
+        # Try to parse the response as JSON
         try:
-            return response.json()[0].get('generated_text', 'Error parsing AI response.')
-        except (IndexError, KeyError, TypeError):
-            return f"Could not parse the AI response. Raw response: {response.text}"
-    else:
-        return f"Error: API request failed. {response.status_code} {response.reason} for url: {response.url}"
+            # Assumes the expected response is a list like: [{'generated_text': '...'}]
+            return response.json()[0].get('generated_text', 'Error: "generated_text" key not found in AI response.')
+        except requests.exceptions.JSONDecodeError:
+            # If JSON parsing fails, the AI likely sent back plain text.
+            # We'll return the raw text directly. This is perfect for debugging.
+            return response.text
+
+    except requests.exceptions.RequestException as e:
+        # Handle network errors or bad status codes
+        return f"Error: API request failed. {e}"
+
 
 def main():
     """
