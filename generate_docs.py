@@ -13,27 +13,26 @@ SOURCE_DIR = "./sample-project"
 DOCS_DIR = "./docs"
 
 def get_ai_documentation(code_content: str) -> str:
-    """Calls the Gradient AI to generate documentation."""
+    """Calls the Gradient AI to generate documentation using a GET request."""
     headers = {"Authorization": f"Bearer {GRADIENT_API_KEY}"}
-    # The prompt is structured to ask the AI for technical markdown documentation.
-    payload = {"inputs": f"Generate technical markdown documentation for this Python code:\n\n{code_content}"}
 
-    try:
-        response = requests.post(GRADIENT_ENDPOINT_URL, headers=headers, json=payload)
-        response.raise_for_status()  # Raises an HTTPError for bad responses (4xx or 5xx)
+    # For a GET request, data is sent as URL parameters, not a JSON body.
+    params = {
+        "inputs": f"Generate technical markdown documentation for this Python code:\n\n{code_content}"
+    }
 
-        # Safely access the JSON response
-        json_response = response.json()
-        if isinstance(json_response, list) and len(json_response) > 0:
-            return json_response[0].get('generated_text', 'Error: "generated_text" key not found in AI response.')
-        else:
-            return 'Error: Unexpected AI response format.'
+    # --- THIS IS THE FIX: Changed requests.post to requests.get ---
+    response = requests.get(GRADIENT_ENDPOINT_URL, headers=headers, params=params)
 
-    except requests.exceptions.RequestException as e:
-        return f"Error: API request failed. {e}"
-    except ValueError: # Catches JSON decoding errors
-        return f"Error: Failed to decode JSON response. Response text: {response.text}"
-
+    if response.status_code == 200:
+        # The response from a GET request might have a slightly different structure.
+        # This assumes it's a list containing a dictionary.
+        try:
+            return response.json()[0].get('generated_text', 'Error parsing AI response.')
+        except (IndexError, KeyError, TypeError):
+            return f"Could not parse the AI response. Raw response: {response.text}"
+    else:
+        return f"Error: API request failed. {response.status_code} {response.reason} for url: {response.url}"
 
 def main():
     """
